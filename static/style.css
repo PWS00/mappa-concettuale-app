@@ -30,3 +30,20 @@ input[type="file"] { display: none; }
 .map-container svg { max-width: 100%; height: auto; } /* Rende le mappe responsive */
 .error { color: #d93025; font-weight: bold; }
 footer { text-align: center; color: #888; font-size: 0.9rem; padding: 1rem; }
+
+.download-btn {
+    display: block;
+    margin: 1rem auto 0;
+    background-color: #17a2b8;
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background-color 0.2s;
+}
+
+.download-btn:hover {
+    background-color: #138496;
+}
