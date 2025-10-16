@@ -40,14 +40,14 @@ def generate_dot_code(text: str, topic: str = None) -> str:
         prompt = f"""
         Crea una mappa concettuale di SINTESI (max 8-10 concetti) sull'argomento: "{topic}".
         La tua risposta deve contenere ESCLUSIVAMENTE il codice DOT valido.
-        RICORDA: Non includere alcun attributo di stile come fillcolor o fontcolor nei nodi.
+        RICORDA: Non usare il nero per colorare i nodi.
         Testo: --- {text[:100000]} ---
         """
     else:
         prompt = f"""
         Crea una mappa concettuale di SINTESI (max 10-12 concetti).
         La tua risposta deve contenere ESCLUSIVAMENTE il codice DOT valido.
-        RICORDA: Non includere alcun attributo di stile come fillcolor o fontcolor nei nodi.
+        RICORDA: Non usare il nero per colorare i nodi.
         Testo: --- {text[:100000]} ---
         """
     response = model.generate_content(prompt)
@@ -75,4 +75,5 @@ async def generate_maps(file: UploadFile = File(...)):
 @app.get("/")
 async def read_index():
     return FileResponse('static/index.html')
+
 
