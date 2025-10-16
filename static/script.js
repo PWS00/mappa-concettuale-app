@@ -9,10 +9,10 @@ const resultsContainer = document.getElementById('results-container');
 fileInput.addEventListener('change', () => {
     if (fileInput.files.length > 0) {
         fileNameSpan.textContent = fileInput.files[0].name;
-        generateBtn.disabled = false; // <-- ATTIVA IL PULSANTE
+        generateBtn.disabled = false;
     } else {
         fileNameSpan.textContent = 'Nessun file selezionato';
-        generateBtn.disabled = true; // <-- DISATTIVA IL PULSANTE
+        generateBtn.disabled = true;
     }
 });
 
@@ -27,7 +27,6 @@ generateBtn.addEventListener('click', async () => {
     const formData = new FormData();
     formData.append('file', file);
 
-    // Mostra il loader e pulisce i risultati precedenti
     loader.classList.remove('hidden');
     resultsContainer.innerHTML = '';
     generateBtn.disabled = true;
@@ -53,7 +52,6 @@ generateBtn.addEventListener('click', async () => {
     } catch (error) {
         resultsContainer.innerHTML = `<p class="error"><strong>Oops!</strong> ${error.message}</p>`;
     } finally {
-        // Nasconde il loader e riattiva il pulsante
         loader.classList.add('hidden');
         generateBtn.disabled = false;
     }
@@ -81,6 +79,45 @@ function renderMap(title, dot, container) {
     viz.renderSVGElement(dot)
         .then(element => {
             mapContainer.appendChild(element);
+            
+            // --- NUOVO CODICE PER IL DOWNLOAD ---
+            const downloadBtn = document.createElement('button');
+            downloadBtn.textContent = 'Salva come PNG';
+            downloadBtn.className = 'download-btn';
+
+            downloadBtn.onclick = () => {
+                // 1. Ottieni l'SVG come stringa di testo
+                const svgData = new XMLSerializer().serializeToString(element);
+
+                // 2. Crea un elemento <canvas> in memoria
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+                
+                // 3. Crea un'immagine dall'SVG
+                const img = new Image();
+                img.src = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svgData)));
+                
+                img.onload = () => {
+                    // 4. Imposta le dimensioni del canvas e disegna l'immagine
+                    canvas.width = img.width;
+                    canvas.height = img.height;
+                    ctx.drawImage(img, 0, 0);
+
+                    // 5. Crea un link temporaneo per avviare il download
+                    const a = document.createElement('a');
+                    a.href = canvas.toDataURL('image/png'); // Converte il canvas in PNG
+                    a.download = `${title.replace(/\s+/g, '_')}_mappa.png`; // Crea un nome per il file
+                    
+                    // 6. Simula il click sul link e poi lo rimuove
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                };
+            };
+            
+            mapContainer.appendChild(downloadBtn);
+            // --- FINE NUOVO CODICE ---
+
             container.appendChild(mapContainer);
         })
         .catch(error => {
