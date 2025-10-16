@@ -3,24 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Generatore di mappe concettuali</title>
+    <title>MindMap</title>
     <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
     <header>
         <h1>Generatore di mappe concettuali da PDF 🧠</h1>
-        <p>Carica un documento per generare una mappa principale e degli approfondimenti.</p>
+        <p>Carica un documento per generare una mappa principale e i relativi approfondimenti!</p>
     </header>
     <main>
         <div id="upload-container">
             <input type="file" id="pdf-upload" accept=".pdf">
             <label for="pdf-upload" class="upload-label">Scegli un file PDF...</label>
             <span id="file-name">Nessun file selezionato</span>
-            <button id="generate-btn" disabled>Genera Mappe</button>
+            <button id="generate-btn" disabled>Genera mappe</button>
         </div>
         <div id="loader" class="hidden">
             <div class="spinner"></div>
-            <p>Elaborazione in corso... potrebbe richiedere un minuto.</p>
+            <p>Elaborazione in corso... potrebbe richiedere un paio di minuti.</p>
         </div>
         <div id="results-container"></div>
     </main>
@@ -32,4 +32,5 @@
     <script src="/static/script.js"></script>
 </body>
 </html>
+
 
